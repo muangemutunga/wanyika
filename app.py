@@ -83,7 +83,9 @@ def init_db():
     conn.commit()
     conn.close()
 
-init_db()
+if not os.path.exists('taskbid.db'):
+    init_db()
+
 
 # Helper functions
 def allowed_file(filename, file_type):
