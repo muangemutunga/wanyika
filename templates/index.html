@@ -1,0 +1,25 @@
+  
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h1 class="mb-4" style="color: var(--orange-primary);">Welcome to Task Bidding Platform</h1>
+        <p class="lead mb-4">Connect with the best talent or find exciting tasks to work on.</p>
+        
+        {% if not session.get('user_id') %}
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg me-md-2">Login</a>
+                <a href="{{ url_for('signup') }}" class="btn btn-outline-primary btn-lg">Sign Up</a>
+            </div>
+        {% else %}
+            <div class="d-grid gap-2 d-md-block">
+                {% if session.get('is_admin') %}
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary btn-lg">Go to Admin Dashboard</a>
+                {% else %}
+                    <a href="{{ url_for('tasks') }}" class="btn btn-primary btn-lg">Browse Tasks</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

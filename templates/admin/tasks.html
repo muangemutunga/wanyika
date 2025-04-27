@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Tasks Management</h2>
+            <a href="{{ url_for('admin_new_task') }}" class="btn btn-primary">Create New Task</a>
+        </div>
+        
+        {% if tasks %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Deadline</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                            <tr>
+                                <td>{{ task.title }}</td>
+                                <td>
+                                    {% if task.status == 'open' %}
+                                        <span class="badge bg-success">Open</span>
+                                    {% elif task.status == 'awarded' %}
+                                        <span class="badge bg-primary">Awarded</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ task.status }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ task.created_at.split(' ')[0] }}</td>
+                                <td>{{ task.deadline if task.deadline else 'No deadline' }}</td>
+                                <td>
+                                    <a href="{{ url_for('admin_task_detail', task_id=task.id) }}" class="btn btn-sm btn-primary">View</a>
+                                    <a href="{{ url_for('admin_edit_task', task_id=task.id) }}" class="btn btn-sm btn-secondary">Edit</a>
+                                    <form method="post" action="{{ url_for('admin_delete_task', task_id=task.id) }}" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-danger" 
+                                                onclick="return confirm('Are you sure you want to delete this task?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info">No tasks found. Create your first task!</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

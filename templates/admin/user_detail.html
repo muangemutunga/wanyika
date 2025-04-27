@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">User Details</div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5>Personal Information</h5>
+                        <p><strong>Name:</strong> {{ user.name }}</p>
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        <p><strong>Phone:</strong> {{ user.phone }}</p>
+                        <p><strong>Joined:</strong> {{ user.created_at }}</p>
+                        <p><strong>Test Score:</strong> {{ user.test_score }}/100</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Account Status</h5>
+                        {% if user.is_suspended == 1 %}
+                            <p><span class="badge bg-danger">Suspended</span></p>
+                            <form method="post" action="{{ url_for('admin_unsuspend_user', user_id=user.id) }}" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-success">Unsuspend User</button>
+                            </form>
+                        {% elif user.is_approved == 1 %}
+                            <p><span class="badge bg-success">Approved</span></p>
+                            <form method="post" action="{{ url_for('admin_suspend_user', user_id=user.id) }}" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-warning">Suspend User</button>
+                            </form>
+                        {% else %}
+                            <p><span class="badge bg-warning text-dark">Pending Approval</span></p>
+                            <form method="post" action="{{ url_for('admin_approve_user', user_id=user.id) }}" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-success">Approve User</button>
+                            </form>
+                        {% endif %}
+                        
+                        <form method="post" action="{{ url_for('admin_delete_user', user_id=user.id) }}" class="d-inline mt-2">
+                            <button type="submit" class="btn btn-sm btn-danger" 
+                                    onclick="return confirm('Are you sure you want to delete this user? This action cannot be undone.')">
+                                Delete User
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h5>Uploaded Documents</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header">ID Card (Front)</div>
+                                    <div class="card-body text-center">
+                                        <a href="{{ url_for('uploaded_file', filename=user.id_front) }}" target="_blank">
+                                            <img src="{{ url_for('uploaded_file', filename=user.id_front) }}" 
+                                                 class="img-fluid" alt="ID Front" style="max-height: 150px;">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header">ID Card (Back)</div>
+                                    <div class="card-body text-center">
+                                        <a href="{{ url_for('uploaded_file', filename=user.id_back) }}" target="_blank">
+                                            <img src="{{ url_for('uploaded_file', filename=user.id_back) }}" 
+                                                 class="img-fluid" alt="ID Back" style="max-height: 150px;">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header">CV/Resume</div>
+                                    <div class="card-body text-center">
+                                        <a href="{{ url_for('uploaded_file', filename=user.cv) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                            View Document
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <a href="{{ url_for('admin_users') }}" class="btn btn-primary">Back to Users</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

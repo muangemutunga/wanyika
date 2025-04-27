@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">Edit Task</div>
+            <div class="card-body">
+                <form method="post" action="{{ url_for('admin_edit_task', task_id=task.id) }}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Task Title</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ task.title }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Task Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="5" required>{{ task.description }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deadline" class="form-label">Deadline (Optional)</label>
+                        <input type="date" class="form-control" id="deadline" name="deadline" value="{{ task.deadline }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status" required>
+                            <option value="open" {% if task.status == 'open' %}selected{% endif %}>Open</option>
+                            <option value="closed" {% if task.status == 'closed' %}selected{% endif %}>Closed</option>
+                            <option value="awarded" {% if task.status == 'awarded' %}selected{% endif %}>Awarded</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('admin_tasks') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Update Task</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

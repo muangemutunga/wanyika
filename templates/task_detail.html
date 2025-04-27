@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>{{ task.title }}</span>
+                <span class="badge bg-primary">{{ task.status }}</span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title mb-4">Task Details</h5>
+                
+                <p class="card-text">{{ task.description }}</p>
+                
+                {% if task.deadline %}
+                    <p class="card-text"><strong>Deadline:</strong> {{ task.deadline }}</p>
+                {% endif %}
+                
+                <p class="card-text"><strong>Posted on:</strong> {{ task.created_at.split(' ')[0] }}</p>
+                
+                {% if existing_bid %}
+                    <div class="alert alert-info mt-4">
+                        <h5>Your Bid</h5>
+                        <p><strong>Budget:</strong> ${{ existing_bid.budget }}</p>
+                        <p><strong>Your Proposal:</strong> {{ existing_bid.proposal }}</p>
+                        <p><small>Submitted on: {{ existing_bid.created_at.split(' ')[0] }}</small></p>
+                        
+                        <a href="{{ url_for('place_bid', task_id=task.id) }}" class="btn btn-sm btn-primary">Update Bid</a>
+                    </div>
+                {% else %}
+                    <div class="mt-4">
+                        <a href="{{ url_for('place_bid', task_id=task.id) }}" class="btn btn-primary">Place Bid</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

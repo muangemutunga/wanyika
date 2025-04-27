@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">Basic Skill Test</div>
+            <div class="card-body">
+                <p class="mb-4">Please complete this basic skill test to continue with your registration.</p>
+                
+                <form method="post" action="{{ url_for('skill_test') }}">
+                    <div class="mb-4">
+                        <h5>Question 1: Which of the following is NOT a primary color?</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q1" id="q1_a" value="a" required>
+                            <label class="form-check-label" for="q1_a">Red</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q1" id="q1_b" value="b">
+                            <label class="form-check-label" for="q1_b">Blue</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q1" id="q1_c" value="c">
+                            <label class="form-check-label" for="q1_c">Green</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Question 2: If a task takes 2 hours to complete by one person, how long would it take if 4 people of equal skill work on it?</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q2" id="q2_a" value="a" required>
+                            <label class="form-check-label" for="q2_a">8 hours</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q2" id="q2_b" value="b">
+                            <label class="form-check-label" for="q2_b">30 minutes</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q2" id="q2_c" value="c">
+                            <label class="form-check-label" for="q2_c">2 hours</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Question 3: What does HTML stand for?</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q3" id="q3_a" value="a" required>
+                            <label class="form-check-label" for="q3_a">HyperText Markup Language</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q3" id="q3_b" value="b">
+                            <label class="form-check-label" for="q3_b">High Text Machine Language</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q3" id="q3_c" value="c">
+                            <label class="form-check-label" for="q3_c">Hyperlink and Text Markup Language</label>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Submit Test</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

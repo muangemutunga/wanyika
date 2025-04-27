@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">Sign Up</div>
+            <div class="card-body">
+                <form method="post" action="{{ url_for('signup') }}" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number (US or UK format)</label>
+                        <input type="text" class="form-control" id="phone" name="phone" 
+                               pattern="^(\d{10}|\d{11})$" 
+                               title="Please enter a valid US (10 digits) or UK (11 digits) phone number" required>
+                        <div class="form-text">US format: 1234567890 (10 digits) or UK format: 01234567890 (11 digits)</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_front" class="form-label">ID Card (Front)</label>
+                        <input type="file" class="form-control" id="id_front" name="id_front" 
+                               accept=".png,.jpg,.jpeg" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_back" class="form-label">ID Card (Back)</label>
+                        <input type="file" class="form-control" id="id_back" name="id_back" 
+                               accept=".png,.jpg,.jpeg" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cv" class="form-label">CV/Resume</label>
+                        <input type="file" class="form-control" id="cv" name="cv" 
+                               accept=".pdf,.doc,.docx" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                    </div>
+                </form>
+                <div class="mt-3 text-center">
+                    <p>Already have an account? <a href="{{ url_for('login') }}" style="color: var(--orange-primary);">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

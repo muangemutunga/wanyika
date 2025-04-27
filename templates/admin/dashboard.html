@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">Admin Dashboard</h2>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">Users Management</div>
+                    <div class="card-body">
+                        <p>View and manage user accounts, approve new users, and view their uploaded documents.</p>
+                        <a href="{{ url_for('admin_users') }}" class="btn btn-primary">Manage Users</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">Tasks Management</div>
+                    <div class="card-body">
+                        <p>Create, edit, or delete tasks, and view bids from users.</p>
+                        <a href="{{ url_for('admin_tasks') }}" class="btn btn-primary">Manage Tasks</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

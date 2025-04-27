@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Bidding Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --orange-primary: #ff7700;
+            --orange-secondary: #ff9d45;
+            --orange-light: #ffbf80;
+            --orange-dark: #cc5f00;
+            --orange-bg: #fff1e6;
+        }
+
+        body {
+            background-color: #fafafa;
+            padding-top: 70px;
+        }
+
+        .navbar {
+            background-color: var(--orange-primary);
+        }
+        
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+
+        .btn-primary {
+            background-color: var(--orange-primary);
+            border-color: var(--orange-dark);
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--orange-dark);
+            border-color: var(--orange-dark);
+        }
+
+        .btn-outline-primary {
+            color: var(--orange-primary);
+            border-color: var(--orange-primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--orange-primary);
+            border-color: var(--orange-primary);
+            color: white;
+        }
+
+        .card {
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: box-shadow 0.3s;
+            border: none;
+        }
+
+        .card:hover {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background-color: var(--orange-bg);
+            color: var(--orange-dark);
+            font-weight: bold;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: var(--orange-bg);
+        }
+
+        .alert-success {
+            background-color: var(--orange-light);
+            border-color: var(--orange-secondary);
+            color: var(--orange-dark);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">Task Bidding Platform</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    {% if session.get('user_id') %}
+                        {% if session.get('is_admin') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('admin_users') }}">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('admin_tasks') }}">Tasks</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('tasks') }}">Tasks</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav">
+                    {% if session.get('user_id') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

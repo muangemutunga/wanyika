@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">Available Tasks</h2>
+        
+        {% if tasks %}
+            <div class="row">
+                {% for task in tasks %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>{{ task.title }}</span>
+                                <span class="badge bg-primary">{{ task.status }}</span>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{ task.description[:150] }}{% if task.description|length > 150 %}...{% endif %}</p>
+                                {% if task.deadline %}
+                                    <p class="card-text"><small class="text-muted">Deadline: {{ task.deadline }}</small></p>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer bg-transparent d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Posted on {{ task.created_at.split(' ')[0] }}</small>
+                                {% if task.id in user_bid_task_ids %}
+                                    <a href="{{ url_for('task_detail', task_id=task.id) }}" class="btn btn-sm btn-outline-primary">View Your Bid</a>
+                                {% else %}
+                                    <a href="{{ url_for('place_bid', task_id=task.id) }}" class="btn btn-sm btn-primary">Place Bid</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">No tasks are currently available. Please check back later.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
